@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from argparse import ArgumentParser
 import json
 
-from pprint import pprint
 import requests
+
+__version__ = '0.1.0'
 
 
 def parse_html(html):
@@ -29,8 +31,24 @@ def upload(f):
 
 
 def main():
-    f = open('test.jpg', 'rb')
-    pprint(upload(f))
+    parser = ArgumentParser(description='CIL tool for bild.me.')
+    parser.add_argument('-V', '--version', action='version',
+                        version=__version__)
+    parser.add_argument('-l', '--list', action='store_true',
+                        help='list all result')
+    parser.add_argument('file', help='picture file')
+    args = parser.parse_args()
+
+    f = open(args.file, 'rb')
+    result = upload(f)
+
+    if result['status'] == 1:
+        return result['message']
+
+    if args.list:
+        return '\n\n'.join(result['result'])
+    else:
+        return result['result'][5]
 
 if __name__ == '__main__':
-    main()
+    print(main())
