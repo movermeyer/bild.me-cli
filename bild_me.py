@@ -31,24 +31,28 @@ def upload(f):
 
 
 def main():
-    parser = ArgumentParser(description='CIL tool for bild.me.')
+    parser = ArgumentParser(description='CLI tool for bild.me.')
     parser.add_argument('-V', '--version', action='version',
                         version=__version__)
     parser.add_argument('-l', '--list', action='store_true',
                         help='list all result')
-    parser.add_argument('file', help='picture file')
+    parser.add_argument('-f', '-F', '--file', required=True,
+                        nargs='+', help='picture file')
     args = parser.parse_args()
+    files = args.file
 
-    f = open(args.file, 'rb')
-    result = upload(f)
+    for img in files:
+        with open(img, 'rb') as f:
+            result = upload(f)
 
-    if result['status'] == 1:
-        return result['message']
+            if result['status'] == 1:
+                yield result['message']
 
-    if args.list:
-        return '\n\n'.join(result['result'])
-    else:
-        return result['result'][5]
+            if args.list:
+                yield '\n\n'.join(result['result'])
+            else:
+                yield result['result'][5]
 
 if __name__ == '__main__':
-    print(main())
+    for s in main():
+        print s
