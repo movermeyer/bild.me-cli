@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+"""CLI tool for bild.me"""
+
 from __future__ import absolute_import, unicode_literals
 
 from argparse import ArgumentParser
@@ -9,7 +11,11 @@ from multiprocessing import Pool
 
 import requests
 
+__title__ = 'bild'
 __version__ = '0.1.0'
+__author__ = 'mozillazg'
+__license__ = 'MIT'
+__copyright__ = 'Copyright (c) 2014 mozillazg'
 
 
 def parse_html(html):
