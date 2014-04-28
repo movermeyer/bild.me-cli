@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import absolute_import, unicode_literals
+
 from argparse import ArgumentParser
 import json
+from multiprocessing import Pool
 
 import requests
 
@@ -29,6 +32,18 @@ def upload(f):
     except requests.exceptions:
         return {'status': 1, 'message': 'Upload failed!'}
 
+def get_result(args):
+    img, list_all = args
+    with open(img, 'rb') as f:
+        result = upload(f)
+
+        if result['status'] == 1:
+            return result['message']
+        if list_all:
+            return '\n\n'.join(result['result'])
+        else:
+            return result['result'][5]
+
 
 def main():
     parser = ArgumentParser(description='CLI tool for bild.me.')
@@ -41,17 +56,13 @@ def main():
     args = parser.parse_args()
     files = args.file
 
-    for img in files:
-        with open(img, 'rb') as f:
-            result = upload(f)
+    # multiprocessing
+    pool = Pool()
+    results = pool.map(get_result, [(img, args.list) for img in files])
+    pool.close()
+    pool.join()
 
-            if result['status'] == 1:
-                yield result['message']
-
-            if args.list:
-                yield '\n\n'.join(result['result'])
-            else:
-                yield result['result'][5]
+    return results
 
 if __name__ == '__main__':
     for s in main():
