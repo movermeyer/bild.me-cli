@@ -32,6 +32,7 @@ def upload(f):
     except requests.exceptions:
         return {'status': 1, 'message': 'Upload failed!'}
 
+
 def get_result(args):
     img, list_all = args
     with open(img, 'rb') as f:
@@ -54,7 +55,7 @@ def main():
     parser.add_argument('-f', '-F', '--file', required=True,
                         nargs='+', help='picture file')
     args = parser.parse_args()
-    files = args.file
+    files = set(args.file)
 
     # multiprocessing
     pool = Pool()
