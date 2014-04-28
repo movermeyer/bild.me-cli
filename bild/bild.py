@@ -39,11 +39,11 @@ def result(args):
         result = upload(f)
 
         if result['status'] == 1:
-            print result['message']
+            print(result['message'])
         if list_all:
-            print '\n\n'.join(result['result'])
+            print('\n\n'.join(result['result']))
         else:
-            print result['result'][5]
+            print(result['result'][5])
 
 
 def main():
