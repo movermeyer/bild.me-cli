@@ -33,17 +33,17 @@ def upload(f):
         return {'status': 1, 'message': 'Upload failed!'}
 
 
-def get_result(args):
+def result(args):
     img, list_all = args
     with open(img, 'rb') as f:
         result = upload(f)
 
         if result['status'] == 1:
-            return result['message']
+            print result['message']
         if list_all:
-            return '\n\n'.join(result['result'])
+            print '\n\n'.join(result['result'])
         else:
-            return result['result'][5]
+            print result['result'][5]
 
 
 def main():
@@ -59,12 +59,9 @@ def main():
 
     # multiprocessing
     pool = Pool()
-    results = pool.map(get_result, [(img, args.list) for img in files])
+    pool.map(result, [(img, args.list) for img in files])
     pool.close()
     pool.join()
 
-    return results
-
 if __name__ == '__main__':
-    for s in main():
-        print s
+    main()
