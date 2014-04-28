@@ -6,7 +6,6 @@ python:
   - "3.3"
 
 install:
-  - "pip install coveralls"
   - "pip install -r requirements_dev.txt"
   - "pip install -e ."
 
