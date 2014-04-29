@@ -5,6 +5,7 @@ from __future__ import absolute_import, unicode_literals
 
 from argparse import ArgumentParser
 from threading import Thread
+import sys
 
 import requests
 
@@ -30,6 +31,8 @@ def upload(f):
         return {'status': 0, 'result': parse_html(html)}
     except requests.exceptions:
         return {'status': 1, 'message': 'Upload failed!'}
+    except Exception as e:
+        return {'status': 1, 'message': e}
 
 
 class UploadThread(Thread):
@@ -43,7 +46,7 @@ class UploadThread(Thread):
             result = upload(f)
 
             if result['status'] == 1:
-                print(result['message'])
+                sys.stderr.write(result['message'] + '\n')
             if self.list_all:
                 print('\n\n'.join(result['result']))
             else:
