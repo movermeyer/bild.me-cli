@@ -1,9 +1,9 @@
 bild.me-cli
-============
+===========
+
+|Build| |PyPI version|
 
 CLI tool for bild.me.
-
-|Build|
 
 
 * GitHub: https://github.com/mozillazg/bild.me-cli
@@ -46,3 +46,5 @@ Usage
 
 .. |Build| image:: https://api.travis-ci.org/mozillazg/bild.me-cli.png?branch=master
    :target: https://travis-ci.org/mozillazg/bild.me-cli
+.. |PyPI version| image:: https://pypip.in/v/bild.me-cli/badge.png
+   :target: https://crate.io/packages/bild.me-cli
