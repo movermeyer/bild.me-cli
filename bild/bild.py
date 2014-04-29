@@ -4,8 +4,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from argparse import ArgumentParser
-import json
-from multiprocessing import Pool
+from threading import Thread
 
 import requests
 
@@ -33,17 +32,22 @@ def upload(f):
         return {'status': 1, 'message': 'Upload failed!'}
 
 
-def result(args):
-    img, list_all = args
-    with open(img, 'rb') as f:
-        result = upload(f)
+class UploadThread(Thread):
+    def __init__(self, img, list_all, *args, **kwargs):
+        self.img = img
+        self.list_all = list_all
+        super(UploadThread, self).__init__(*args, **kwargs)
 
-        if result['status'] == 1:
-            print(result['message'])
-        if list_all:
-            print('\n\n'.join(result['result']))
-        else:
-            print(result['result'][5])
+    def run(self):
+        with open(self.img, 'rb') as f:
+            result = upload(f)
+
+            if result['status'] == 1:
+                print(result['message'])
+            if self.list_all:
+                print('\n\n'.join(result['result']))
+            else:
+                print(result['result'][5])
 
 
 def main():
@@ -56,12 +60,15 @@ def main():
                         nargs='+', help='picture file')
     args = parser.parse_args()
     files = set(args.file)
+    list_all = args.list
 
-    # multiprocessing
-    pool = Pool()
-    pool.map(result, [(img, args.list) for img in files])
-    pool.close()
-    pool.join()
+    threads = []
+    for img in files:
+        t = UploadThread(img, list_all)
+        threads.append(t)
+        t.start()
+    for t in threads:
+        t.join()
 
 if __name__ == '__main__':
     main()
