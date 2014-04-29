@@ -1,6 +1,8 @@
 *.py[cod]
 *.sw[op]
 
+/*.png
+
 test-output
 
 # C extensions
