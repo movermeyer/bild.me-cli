@@ -5,6 +5,7 @@ from __future__ import absolute_import, unicode_literals
 
 from argparse import ArgumentParser
 from threading import Thread
+from time import sleep
 import sys
 
 import requests
@@ -35,22 +36,50 @@ def upload(f):
         return {'status': 1, 'message': e}
 
 
-class UploadThread(Thread):
-    def __init__(self, img, list_all, *args, **kwargs):
-        self.img = img
+class ProgressBar(object):
+    def __init__(self, list_all):
+        self.progress = {}
         self.list_all = list_all
+
+    def run(self):
+        f = sys.stdout
+
+        for (k, p) in self.progress.items():
+            for x in range(1, 50):
+                if p['finish']:
+                    x = 50
+                s = '{0}: [{1}]'.format(k, ('=' * x + '>').ljust(50, '-'))
+                f.write(s)
+                f.flush()
+                f.write('\r')
+
+                if x != 50:
+                    sleep(0.3)
+                else:
+                    break
+            f.write('\n')
+            if p['finish']:
+                result = p['result']
+                if result['status'] == 1:
+                    sys.stderr.write(result['message'] + '\n')
+                if self.list_all:
+                    print('\n\n'.join(result['result']))
+                else:
+                    print(result['result'][5])
+
+
+class UploadThread(Thread):
+    def __init__(self, img, bar, *args, **kwargs):
+        self.img = img
+        self.bar = bar
         super(UploadThread, self).__init__(*args, **kwargs)
 
     def run(self):
         with open(self.img, 'rb') as f:
+            self.bar.progress[f.name] = {'finish': False}
             result = upload(f)
-
-            if result['status'] == 1:
-                sys.stderr.write(result['message'] + '\n')
-            if self.list_all:
-                print('\n\n'.join(result['result']))
-            else:
-                print(result['result'][5])
+            self.bar.progress[f.name]['finish'] = True
+            self.bar.progress[f.name]['result'] = result
 
 
 def main():
@@ -64,14 +93,14 @@ def main():
     args = parser.parse_args()
     files = set(args.file)
     list_all = args.list
+    bar = ProgressBar(list_all)
 
-    threads = []
-    for img in files:
-        t = UploadThread(img, list_all)
-        threads.append(t)
+    for n, img in enumerate(files):
+        t = UploadThread(img, bar)
         t.start()
-    for t in threads:
-        t.join()
+
+    sleep(0.2)
+    bar.run()
 
 if __name__ == '__main__':
     main()
