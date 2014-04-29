@@ -28,11 +28,17 @@ Usage
 .. code-block:: console
 
     $ bild -f test1.png test2.png
+    test1.png: [==================================================>]
+    http://s1.bild.me/bilder/260513/4053120test1.png
+    test2.png: [==================================================>]
+    http://s1.bild.me/bilder/260513/1932235test2.png
+
+    $ bild -q -f test1.png test2.png
     http://s1.bild.me/bilder/260513/3599206test2.png
     http://s1.bild.me/bilder/260513/8204314test1.png
-    
+
     $ bild -h
-    usage: bild-script.py [-h] [-V] [-l] -f FILE [FILE ...]
+    usage: bild [-h] [-V] [-l] [-q] -f FILE [FILE ...]
 
     CLI tool for bild.me.
 
@@ -40,6 +46,7 @@ Usage
       -h, --help            show this help message and exit
       -V, --version         show program's version number and exit
       -l, --list            list all result
+      -q, --quiet           decrease verbosity
       -f FILE [FILE ...], -F FILE [FILE ...], --file FILE [FILE ...]
                             picture file
 
