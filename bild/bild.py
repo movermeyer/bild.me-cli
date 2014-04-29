@@ -4,6 +4,7 @@
 from __future__ import absolute_import, unicode_literals
 
 from argparse import ArgumentParser
+from copy import deepcopy
 from threading import Thread, active_count
 from time import sleep
 import sys
@@ -59,7 +60,7 @@ class ProgressBar(object):
     def run(self):
         size = 50
         for x in range(1, size + 1):
-            for (k, p) in self.progress.items():
+            for (k, p) in deepcopy(self.progress).items():
                 _x = x
                 if p['finish']:
                     _x = size
