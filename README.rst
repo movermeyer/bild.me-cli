@@ -9,7 +9,7 @@ CLI tool for bild.me.
 * GitHub: https://github.com/mozillazg/bild.me-cli
 * Free software: MIT license
 * PyPI: https://pypi.python.org/pypi/bild.me-cli
-* Python version: 2.6, 2.7, pypy, 3.3
+* Python version: 2.6, 2.7, pypy, 3.3, 3.4
 
 
 Installation
