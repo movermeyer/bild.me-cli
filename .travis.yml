@@ -19,7 +19,7 @@ script:
 
 matrix:
   allow_failures:
-      - python: "3.2"
+    - python: "3.2"
 
 notifications:
   email:
