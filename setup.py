@@ -41,7 +41,7 @@ setup(
     author_email='mozillazg101@gmail.com',
     license=bild.__license__,
     packages=packages,
-    package_data={'': ['LICENSE.rst']},
+    package_data={'': ['LICENSE.txt']},
     package_dir={'bild': 'bild'},
     entry_points={
         'console_scripts': [

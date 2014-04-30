@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.1.1 (2014-mm-dd)
+0.1.1 (2014-04-30)
 ------------------
 
 * [change] use multi-thread instead of multi-process
