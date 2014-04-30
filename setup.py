@@ -41,7 +41,7 @@ setup(
     author_email='mozillazg101@gmail.com',
     license=bild.__license__,
     packages=packages,
-    package_data={'': ['LICENSE.rst']},
+    package_data={'': ['LICENSE.txt']},
     package_dir={'bild': 'bild'},
     entry_points={
         'console_scripts': [
@@ -62,6 +62,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
         'Environment :: Console',
         'Topic :: Utilities',
         'Topic :: Terminals',
