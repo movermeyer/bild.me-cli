@@ -5,6 +5,7 @@ from __future__ import absolute_import, unicode_literals
 
 from argparse import ArgumentParser
 from copy import deepcopy
+from glob import glob
 from threading import Thread, active_count
 from time import sleep
 import sys
@@ -104,9 +105,17 @@ def main():
     parser.add_argument('-q', '--quiet', action='store_true',
                         help='decrease verbosity')
     parser.add_argument('-f', '-F', '--file', required=True,
-                        nargs='+', help='picture file')
+                        nargs='+', help=('picture file path, '
+                                         'support Unix shell-style wildcards'
+                                         )
+                        )
     args = parser.parse_args()
-    files = set(args.file)
+
+    file_args = set(args.file)
+    files = []
+    for x in file_args:
+        files.extend(glob(x))
+
     list_all = args.list
     show = not args.quiet
     bar = ProgressBar(list_all, show)

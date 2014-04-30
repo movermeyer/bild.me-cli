@@ -37,6 +37,10 @@ Usage
     http://s1.bild.me/bilder/260513/3599206test2.png
     http://s1.bild.me/bilder/260513/8204314test1.png
 
+    $ bild -qf *.png
+    http://s1.bild.me/bilder/260513/3041575test2.png
+    http://s1.bild.me/bilder/260513/6296743test1.png
+
     $ bild -h
     usage: bild [-h] [-V] [-l] [-q] -f FILE [FILE ...]
 
@@ -48,7 +52,7 @@ Usage
       -l, --list            list all result
       -q, --quiet           decrease verbosity
       -f FILE [FILE ...], -F FILE [FILE ...], --file FILE [FILE ...]
-                            picture file
+                            picture file path, support Unix shell-style wildcards
 
 
 .. |Build| image:: https://api.travis-ci.org/mozillazg/bild.me-cli.png?branch=master
