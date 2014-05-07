@@ -32,8 +32,6 @@ def upload(f):
     try:
         html = requests.post(url, data=data, files=files).text
         return {'status': 0, 'result': parse_html(html)}
-    except requests.exceptions:
-        return {'status': 1, 'message': 'Upload failed!'}
     except Exception as e:
         return {'status': 1, 'message': e}
 
