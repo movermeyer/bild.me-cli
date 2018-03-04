@@ -57,5 +57,5 @@ Usage
 
 .. |Build| image:: https://api.travis-ci.org/mozillazg/bild.me-cli.png?branch=master
    :target: https://travis-ci.org/mozillazg/bild.me-cli
-.. |PyPI version| image:: https://pypip.in/v/bild.me-cli/badge.png
+.. |PyPI version| image:: https://img.shields.io/pypi/v/bild.me-cli.svg
    :target: https://crate.io/packages/bild.me-cli
